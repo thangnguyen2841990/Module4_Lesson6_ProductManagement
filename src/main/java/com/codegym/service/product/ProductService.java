@@ -29,6 +29,11 @@ IProductRepository productDAO;
     }
 
     @Override
+    public List<Product> findByName(String name) {
+        return productDAO.findByName(name);
+    }
+
+    @Override
     public void delete(Long id) {
         productDAO.delete(id);
     }

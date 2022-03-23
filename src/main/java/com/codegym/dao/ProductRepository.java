@@ -47,6 +47,13 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
+    public List<Product> findByName(String name) {
+        TypedQuery<Product> query = em.createQuery("SELECT p FROM Product as p where p.name like :name", Product.class);
+        query.setParameter("name", name);
+        return query.getResultList();
+    }
+
+    @Override
     public void delete(Long id) {
         Product product = findById(id);
         if (product != null) {

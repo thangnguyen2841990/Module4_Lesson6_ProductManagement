@@ -9,6 +9,7 @@ public interface IGeneralRepository<T> {
 
     T findById(Long id);
 
+    List<T> findByName(String name);
 
     void delete(Long id);
 }

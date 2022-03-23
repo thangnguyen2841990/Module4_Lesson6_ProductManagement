@@ -3,7 +3,6 @@ package com.codegym.controller;
 import com.codegym.model.Product;
 import com.codegym.model.ProductForm;
 import com.codegym.service.product.IProductService;
-import com.codegym.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -26,13 +25,29 @@ public class ProductController {
     private String fileUpload;
 
     @GetMapping
-    private ModelAndView showAllProduct() {
-        List<Product> products = productService.findAll();
-        ModelAndView modelAndView = new ModelAndView("/product/list");
-        modelAndView.addObject("products", products);
+    private ModelAndView showAllProduct(String name) {
+        if (name == null){
+            List<Product> products = productService.findAll();
+            ModelAndView modelAndView = new ModelAndView("/product/list");
+            modelAndView.addObject("products", products);
+            return modelAndView;
+        } else {
+            String name1 = "%" + name + "%";
+            List<Product> products = this.productService.findByName(name1);
+            ModelAndView modelAndView = new ModelAndView("/product/list");
+            modelAndView.addObject("products", products);
+            return modelAndView;
+        }
+
+
+    }
+    @GetMapping("/view/{id}")
+    private ModelAndView showProductDetail(@PathVariable Long id) {
+        Product product = this.productService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("/product/view");
+        modelAndView.addObject("product", product);
         return modelAndView;
     }
-
     @GetMapping("/create")
     private ModelAndView showFormProduct() {
         ProductForm productForm = new ProductForm();

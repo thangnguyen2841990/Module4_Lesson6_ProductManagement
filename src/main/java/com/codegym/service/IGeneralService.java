@@ -9,6 +9,7 @@ public interface IGeneralService<T> {
 
     T findById(Long id);
 
+    List<T> findByName(String name);
 
     void delete(Long id);
 
